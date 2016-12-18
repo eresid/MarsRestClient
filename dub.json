@@ -1,0 +1,9 @@
+{
+	"name": "marsrestclient",
+	"authors": [
+		"Eugene Sakara"
+	],
+	"description": "Simple REST client on D language",
+	"copyright": "Copyright © 2016, Eugene Sakara",
+	"license": "MIT"
+}
