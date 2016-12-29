@@ -18,9 +18,11 @@ void main()
 	
 	HttpClientOptions options = new HttpClientOptions;
 	options.baseUrl(BASE_URL);
-	
+	options.headers = ["DefaultHeader" : "header value"];
 	HttpClient client = new AsyncHttpClient(options);
-	client.get("get", params, new CredentialsHttpResponseHandler);
+	
+	client.post("post?name=Eugene", params, ["CustomHeader1" : "value1", "CustomHeader2" : "value2"], new CredentialsHttpResponseHandler);
+	client.get("get?key1=value1&key2=value2", params, ["CustomHeader3" : "value3", "CustomHeader4" : "value4"], new CredentialsHttpResponseHandler);
 }
 
 private class CredentialsHttpResponseHandler : HttpResponseHandler {
@@ -43,13 +45,4 @@ private class CredentialsHttpResponseHandler : HttpResponseHandler {
 		}
 		writeln(cast(string)responseBody);
 	}
-}
-
-void getHeader() {
-	// GET with custom data receivers
-	auto http = HTTP("dlang.org");
-	http.onReceiveHeader =
-		(in char[] key, in char[] value) { writeln(key, ": ", value); };
-	http.onReceive = (ubyte[] data) { /+ drop +/ return data.length; };
-	http.perform();
 }

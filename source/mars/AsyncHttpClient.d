@@ -17,6 +17,8 @@ class AsyncHttpClient : HttpClient {
 	this(HttpClientOptions options) {
 		mOptions = options;
 		mHttp = HTTP();
+		
+		loadDefaultHeaders();
 	}
 	
 	void post(string url, HttpResponseHandler responseHandler) {
@@ -52,7 +54,35 @@ class AsyncHttpClient : HttpClient {
 		ubyte[] responseBody;
 
 		mHttp.method = httpMethod;
-		mHttp.url = getCorrectUrl(url);
+		if (httpMethod == HTTP.Method.post) {
+			mHttp.url = getCorrectUrl(url);
+			mHttp.setPostData(params.toJson, "application/json");
+		} else if (httpMethod == HTTP.Method.get) {
+			string getUrl = getCorrectUrl(url);
+			string[string] paramsToSend = params.getParams;
+			
+			if (paramsToSend !is null && paramsToSend.length > 0) {
+				import std.string;
+				import std.algorithm.searching;
+				import std.algorithm.iteration;
+				
+				string urlParams = paramsToSend.keys.map!(k => k ~ "=" ~ paramsToSend[k]).join("&");
+				if (canFind(getUrl, "?")) {
+					mHttp.url = getUrl ~ "&" ~ urlParams;
+				} else {
+					string finalUrl = getUrl ~ "?" ~ urlParams;
+					mHttp.url = finalUrl;
+				}
+			} else {
+				mHttp.url = getCorrectUrl(url);
+			}
+		}
+		if (headers != null && headers.length > 0) {
+			foreach (name, value; headers) {
+				mHttp.addRequestHeader(name, value);
+			}
+		}
+		
 		mHttp.onReceiveStatusLine = (HTTP.StatusLine status) {
 			statusCode = status.code;
 		};
@@ -69,6 +99,8 @@ class AsyncHttpClient : HttpClient {
 		};
 		mHttp.perform();
 		
+		loadDefaultHeaders();
+		
 		if (StatusCode.isSuccess(statusCode)) {
 			responseHandler.onSuccess(statusCode, responseHeaders, responseBody);
 		} else {
@@ -76,15 +108,30 @@ class AsyncHttpClient : HttpClient {
 		}
 	}
 	
+	/**
+	 * Remove all custom headers except the default headers
+	 */
+	private void loadDefaultHeaders() {
+		mHttp.clearRequestHeaders;
+		
+		string[string] headers = mOptions.headers;
+		
+		if (headers != null && headers.length > 0) {
+			foreach (name, value; headers) {
+				mHttp.addRequestHeader(name, value);
+			}
+		}
+	}
+	
 	private string getCorrectUrl(string url) {
+		import std.exception;
+		
+		enforce(mOptions.baseUrl !is null, new Exception("Cannot get URL, please, set base URL!"));
+		
 		import std.algorithm.searching;
 		
 		if (url.startsWith("http")) {
 			return url;
-		}
-		
-		if (mOptions.baseUrl is null) {
-			throw new Exception("Cannot get URL, please, set base URL!");
 		}
 		
 		return mOptions.baseUrl ~ url;

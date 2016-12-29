@@ -4,7 +4,17 @@ import std.conv;
 
 class RequestParams {
 	
-	string[string] params;
+	private string[string] params;
+	
+	string[string] getParams() {
+		return params;
+	}
+	
+	string toJson() {
+		import std.json;
+		
+		return JSONValue(params).toString;
+	}
 	
 	/**
 	 * string value
