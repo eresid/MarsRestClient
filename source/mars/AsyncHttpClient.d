@@ -15,11 +15,15 @@ class AsyncHttpClient : HttpClient {
 	private HttpClientOptions mOptions;
 	private HTTP mHttp;
 	
-	this(HttpClientOptions options) {
+	private this(HttpClientOptions options) {
 		mOptions = options;
 		mHttp = HTTP();
 		
 		loadDefaultHeaders();
+	}
+	
+	static HttpClient init(HttpClientOptions options) {
+		return new this(options);
 	}
 	
 	void post(Request request, HttpResponseHandler responseHandler) {
@@ -46,20 +50,22 @@ class AsyncHttpClient : HttpClient {
 		import std.stdio;
 		import std.conv;
 		
+		string url = getCorrectUrl(request.getUrl);
+		writeln("url: ", url);
+		
 		int statusCode = StatusCode.BAD_REQUEST;
 		string[string] responseHeaders;
 		ubyte[] responseBody;
 
 		mHttp.method = httpMethod;
-		if (httpMethod == HTTP.Method.post) {
-			mHttp.url = getCorrectUrl(request.getUrl);
+		if (httpMethod == HTTP.Method.post || httpMethod == HTTP.Method.del || httpMethod == HTTP.Method.patch || httpMethod == HTTP.Method.put) {
+			mHttp.url = url;
 			string contentType = "Content-Type" in mOptions.headers ? mOptions.headers["Content-Type"] : null;
 			if (contentType is null) {
 				contentType = "Content-Type" in request.getHeaders ? request.getHeaders["Content-Type"] : "application/json";
 			}
 			mHttp.setPostData(request.getParams.toJson, contentType);
 		} else if (httpMethod == HTTP.Method.get) {
-			string getUrl = getCorrectUrl(request.getUrl);
 			string[string] paramsToSend = request.getParams.getParams;
 			
 			if (paramsToSend !is null && paramsToSend.length > 0) {
@@ -68,14 +74,13 @@ class AsyncHttpClient : HttpClient {
 				import std.algorithm.iteration;
 				
 				string urlParams = paramsToSend.keys.map!(k => k ~ "=" ~ paramsToSend[k]).join("&");
-				if (canFind(getUrl, "?")) {
-					mHttp.url = getUrl ~ "&" ~ urlParams;
+				if (canFind(url, "?")) {
+					mHttp.url = url ~ "&" ~ urlParams;
 				} else {
-					string finalUrl = getUrl ~ "?" ~ urlParams;
-					mHttp.url = finalUrl;
+					mHttp.url = url ~ "?" ~ urlParams;
 				}
 			} else {
-				mHttp.url = getCorrectUrl(request.getUrl);
+				mHttp.url = url;
 			}
 		}
 		if (request.getHeaders != null && request.getHeaders.length > 0) {

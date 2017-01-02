@@ -9,7 +9,7 @@ import mars.Request;
 import mars.RequestParams;
 import mars.ServerException;
 
-string BASE_URL = "http://httpbin.org/";
+string BASE_URL = "https://httpbin.org/";
 
 void main()
 {
@@ -20,21 +20,43 @@ void main()
 	HttpClientOptions options = new HttpClientOptions;
 	options.baseUrl(BASE_URL);
 	options.headers = ["DefaultHeader" : "header value", "User-Agent" : "Custom User Agent", "Accept" : "Custom Accept"];
-	HttpClient client = new AsyncHttpClient(options);
+	HttpClient client = AsyncHttpClient.init(options);
 	
 	Request postRequest = new Request.Builder()
 					.url("post?name=Eugene")
 					.params(params)
-					.headers(["CustomHeader1" : "value1", "CustomHeader2" : "value2"])
+					.headers(["Custom-Header1" : "value1", "Custom-Header2" : "value2"])
 					.build();
 	client.post(postRequest, new CredentialsHttpResponseHandler);
 	
 	Request getRequest = new Request.Builder()
 					.url("get?name=Eugene&key1=value1&key2=value2")
 					.params(params)
-					.headers(["CustomHeader3" : "value3", "CustomHeader4" : "value4", "Content-Type" : "Custon Content Type"])
+					.headers(["Custom-Header3" : "value3", "Custom-Header4" : "value4", "Content-Type" : "Custon Content Type"])
 					.build();
 	client.get(getRequest, new CredentialsHttpResponseHandler);
+	
+	Request delRequest = new Request.Builder()
+					.url("delete?name=Eugene&key1=value1&key2=value2")
+					.params(params)
+					.headers(["Custom-Header5" : "value5"])
+					.build();
+	client.del(delRequest, new CredentialsHttpResponseHandler);
+	
+	Request patchRequest = new Request.Builder()
+					.url("patch?name=Eugene&key1=value1&key2=value2")
+					.params(params)
+					.headers(["Custom-Header5" : "value5"])
+					.build();
+	client.patch(patchRequest, new CredentialsHttpResponseHandler);
+	
+	Request putRequest = new Request.Builder()
+					.url("put")
+					.params(params)
+					.headers(["Custom-Header6" : "value6"])
+					.build();
+	//client.put(putRequest, new CredentialsHttpResponseHandler);
+	//writeln(put("https://httpbin.org/put", "Hi!"));
 }
 
 private class CredentialsHttpResponseHandler : HttpResponseHandler {

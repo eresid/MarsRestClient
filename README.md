@@ -12,12 +12,13 @@ Simple REST client on D language
 * ~~GET request~~
 
 [0.2]
-* ~~add builder for HTTP Client~~
+* ~~Add builder for HTTP Client~~
 * ~~Content Type~~
 * ~~User Agent~~
+* ~~DELETE request~~
+* ~~PATCH request~~
+* Set args and data in builder
 * PUT request
-* PATCH request
-* DELETE request
 
 [0.3]
 * VK sample
@@ -28,6 +29,7 @@ Simple REST client on D language
 * Multipart/form-data
 * flatbuffers support
 * Timeout
+* Optional logs (terminal or file)
 
 ## Backlog
 * Async requests
