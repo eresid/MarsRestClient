@@ -53,7 +53,11 @@ class AsyncHttpClient : HttpClient {
 		mHttp.method = httpMethod;
 		if (httpMethod == HTTP.Method.post) {
 			mHttp.url = getCorrectUrl(request.getUrl);
-			mHttp.setPostData(request.getParams.toJson, "application/json");
+			string contentType = "Content-Type" in mOptions.headers ? mOptions.headers["Content-Type"] : null;
+			if (contentType is null) {
+				contentType = "Content-Type" in request.getHeaders ? request.getHeaders["Content-Type"] : "application/json";
+			}
+			mHttp.setPostData(request.getParams.toJson, contentType);
 		} else if (httpMethod == HTTP.Method.get) {
 			string getUrl = getCorrectUrl(request.getUrl);
 			string[string] paramsToSend = request.getParams.getParams;

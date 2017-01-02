@@ -12,19 +12,20 @@ Simple REST client on D language
 * ~~GET request~~
 
 [0.2]
-* Json serialization/deserialization
-* VK sample
-* httpbin.org sample
+* ~~add builder for HTTP Client~~
+* ~~Content Type~~
+* ~~User Agent~~
+* PUT request
+* PATCH request
+* DELETE request
 
 [0.3]
+* VK sample
+* httpbin.org sample
 * Dynamic parameters in URL
-* PUT request
-* Content Type
 
 [0.4]
 * Multipart/form-data
-* PATCH request
-* DELETE request
 * flatbuffers support
 * Timeout
 
@@ -37,6 +38,7 @@ Simple REST client on D language
 	* javadoc
 * Unit Tests
 * RX support
+* Json serialization/deserialization
 * OAuth 2
 * Support dlang-requests
   * https://github.com/ikod/dlang-requests

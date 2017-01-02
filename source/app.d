@@ -19,7 +19,7 @@ void main()
 	
 	HttpClientOptions options = new HttpClientOptions;
 	options.baseUrl(BASE_URL);
-	options.headers = ["DefaultHeader" : "header value"];
+	options.headers = ["DefaultHeader" : "header value", "User-Agent" : "Custom User Agent", "Accept" : "Custom Accept"];
 	HttpClient client = new AsyncHttpClient(options);
 	
 	Request postRequest = new Request.Builder()
@@ -32,7 +32,7 @@ void main()
 	Request getRequest = new Request.Builder()
 					.url("get?name=Eugene&key1=value1&key2=value2")
 					.params(params)
-					.headers(["CustomHeader3" : "value3", "CustomHeader4" : "value4"])
+					.headers(["CustomHeader3" : "value3", "CustomHeader4" : "value4", "Content-Type" : "Custon Content Type"])
 					.build();
 	client.get(getRequest, new CredentialsHttpResponseHandler);
 }
