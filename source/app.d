@@ -5,6 +5,7 @@ import mars.AsyncHttpClient;
 import mars.HttpClient;
 import mars.HttpClientOptions;
 import mars.HttpResponseHandler;
+import mars.Request;
 import mars.RequestParams;
 import mars.ServerException;
 
@@ -21,8 +22,19 @@ void main()
 	options.headers = ["DefaultHeader" : "header value"];
 	HttpClient client = new AsyncHttpClient(options);
 	
-	client.post("post?name=Eugene", params, ["CustomHeader1" : "value1", "CustomHeader2" : "value2"], new CredentialsHttpResponseHandler);
-	client.get("get?key1=value1&key2=value2", params, ["CustomHeader3" : "value3", "CustomHeader4" : "value4"], new CredentialsHttpResponseHandler);
+	Request postRequest = new Request.Builder()
+					.url("post?name=Eugene")
+					.params(params)
+					.headers(["CustomHeader1" : "value1", "CustomHeader2" : "value2"])
+					.build();
+	client.post(postRequest, new CredentialsHttpResponseHandler);
+	
+	Request getRequest = new Request.Builder()
+					.url("get?name=Eugene&key1=value1&key2=value2")
+					.params(params)
+					.headers(["CustomHeader3" : "value3", "CustomHeader4" : "value4"])
+					.build();
+	client.get(getRequest, new CredentialsHttpResponseHandler);
 }
 
 private class CredentialsHttpResponseHandler : HttpResponseHandler {

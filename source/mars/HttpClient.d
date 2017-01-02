@@ -1,18 +1,16 @@
 module mars.HttpClient;
 
 import mars.HttpResponseHandler;
-import mars.RequestParams;
+import mars.Request;
 
 interface HttpClient {
-	void post(string url, HttpResponseHandler responseHandler);
+	void post(Request request, HttpResponseHandler responseHandler);
 	
-	void post(string url, RequestParams params, HttpResponseHandler responseHandler);
+	void get(Request request, HttpResponseHandler responseHandler);
 	
-	void post(string url, RequestParams params, string[string] headers, HttpResponseHandler responseHandler);
+	void put(Request request, HttpResponseHandler responseHandler);
 	
-	void get(string url, HttpResponseHandler responseHandler);
+	void del(Request request, HttpResponseHandler responseHandler);
 	
-	void get(string url, RequestParams params, HttpResponseHandler responseHandler);
-	
-	void get(string url, RequestParams params, string[string] headers, HttpResponseHandler responseHandler);
+	void patch(Request request, HttpResponseHandler responseHandler);
 }

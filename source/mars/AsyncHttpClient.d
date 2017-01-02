@@ -5,6 +5,7 @@ import std.net.curl;
 import mars.HttpResponseHandler;
 import mars.HttpClient;
 import mars.HttpClientOptions;
+import mars.Request;
 import mars.RequestParams;
 import mars.ServerException;
 import mars.StatusCode;
@@ -21,31 +22,27 @@ class AsyncHttpClient : HttpClient {
 		loadDefaultHeaders();
 	}
 	
-	void post(string url, HttpResponseHandler responseHandler) {
-		post(url, null, null, responseHandler);
+	void post(Request request, HttpResponseHandler responseHandler) {
+		doRequest(HTTP.Method.post, request, responseHandler);
 	}
 	
-	void post(string url, RequestParams params, HttpResponseHandler responseHandler) {
-		post(url, params, null, responseHandler);
+	void get(Request request, HttpResponseHandler responseHandler) {
+		doRequest(HTTP.Method.get, request, responseHandler);
 	}
 	
-	void post(string url, RequestParams params, string[string] headers, HttpResponseHandler responseHandler) {
-		doRequest(HTTP.Method.post, url, params, headers, responseHandler);
+	void put(Request request, HttpResponseHandler responseHandler) {
+		doRequest(HTTP.Method.put, request, responseHandler);
 	}
 	
-	void get(string url, HttpResponseHandler responseHandler) {
-		get(url, null, null, responseHandler);
+	void del(Request request, HttpResponseHandler responseHandler) {
+		doRequest(HTTP.Method.del, request, responseHandler);
 	}
 	
-	void get(string url, RequestParams params, HttpResponseHandler responseHandler) {
-		get(url, params, null, responseHandler);
+	void patch(Request request, HttpResponseHandler responseHandler) {
+		doRequest(HTTP.Method.patch, request, responseHandler);
 	}
 	
-	void get(string url, RequestParams params, string[string] headers, HttpResponseHandler responseHandler) {
-		doRequest(HTTP.Method.get, url, params, headers, responseHandler);
-	}
-	
-	private void doRequest(HTTP.Method httpMethod, string url, RequestParams params, string[string] headers, HttpResponseHandler responseHandler) {
+	private void doRequest(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
 		import std.stdio;
 		import std.conv;
 		
@@ -55,11 +52,11 @@ class AsyncHttpClient : HttpClient {
 
 		mHttp.method = httpMethod;
 		if (httpMethod == HTTP.Method.post) {
-			mHttp.url = getCorrectUrl(url);
-			mHttp.setPostData(params.toJson, "application/json");
+			mHttp.url = getCorrectUrl(request.getUrl);
+			mHttp.setPostData(request.getParams.toJson, "application/json");
 		} else if (httpMethod == HTTP.Method.get) {
-			string getUrl = getCorrectUrl(url);
-			string[string] paramsToSend = params.getParams;
+			string getUrl = getCorrectUrl(request.getUrl);
+			string[string] paramsToSend = request.getParams.getParams;
 			
 			if (paramsToSend !is null && paramsToSend.length > 0) {
 				import std.string;
@@ -74,11 +71,11 @@ class AsyncHttpClient : HttpClient {
 					mHttp.url = finalUrl;
 				}
 			} else {
-				mHttp.url = getCorrectUrl(url);
+				mHttp.url = getCorrectUrl(request.getUrl);
 			}
 		}
-		if (headers != null && headers.length > 0) {
-			foreach (name, value; headers) {
+		if (request.getHeaders != null && request.getHeaders.length > 0) {
+			foreach (name, value; request.getHeaders) {
 				mHttp.addRequestHeader(name, value);
 			}
 		}
