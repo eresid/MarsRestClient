@@ -1,5 +1,6 @@
-module mars.AsyncHttpClient;
+module mars.CurlHttpClient;
 
+import core.thread;
 import std.net.curl;
 
 import mars.HttpResponseHandler;
@@ -7,11 +8,12 @@ import mars.HttpClient;
 import mars.HttpClientOptions;
 import mars.Request;
 import mars.RequestParams;
+import mars.Response;
 import mars.ServerException;
 import mars.StatusCode;
 import mars.UrlHelper;
 
-class AsyncHttpClient : HttpClient {
+class CurlHttpClient : HttpClient {
 	
 	private HttpClientOptions mOptions;
 	private HTTP mHttp;
@@ -31,23 +33,43 @@ class AsyncHttpClient : HttpClient {
 		doRequest(HTTP.Method.post, request, responseHandler);
 	}
 	
+	Response post(Request request) {
+		return doRequest(HTTP.Method.post, request);
+	}
+	
 	void get(Request request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.get, request, responseHandler);
+	}
+	
+	Response get(Request request) {
+		return doRequest(HTTP.Method.get, request);
 	}
 	
 	void put(Request request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.put, request, responseHandler);
 	}
 	
+	Response put(Request request) {
+		return doRequest(HTTP.Method.put, request);
+	}
+	
 	void del(Request request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.del, request, responseHandler);
+	}
+	
+	Response del(Request request) {
+		return doRequest(HTTP.Method.del, request);
 	}
 	
 	void patch(Request request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.patch, request, responseHandler);
 	}
 	
-	private void doRequest(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+	Response patch(Request request) {
+		return doRequest(HTTP.Method.patch, request);
+	}
+	
+	Response doRequest(HTTP.Method httpMethod, Request request) {
 		import std.stdio;
 		import std.conv;
 		
@@ -56,7 +78,8 @@ class AsyncHttpClient : HttpClient {
 		ubyte[] responseBody;
 
 		mHttp.method = httpMethod;
-		mHttp.url = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getParams);
+		string requestUrl = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getParams);
+		mHttp.url = requestUrl;
 		
 		if (httpMethod != HTTP.Method.get) {
 			string contentType = "Content-Type" in mOptions.headers ? mOptions.headers["Content-Type"] : null;
@@ -90,11 +113,22 @@ class AsyncHttpClient : HttpClient {
 		
 		loadDefaultHeaders();
 		
-		if (StatusCode.isSuccess(statusCode)) {
-			responseHandler.onSuccess(statusCode, responseHeaders, responseBody);
-		} else {
-			responseHandler.onFailure(statusCode, responseHeaders, responseBody, new ServerException(statusCode));
-		}
+		Response response = new Response.Builder()
+			.url(requestUrl)
+			.statusCode(statusCode)
+			.headers(responseHeaders)
+			.responseBody(responseBody)
+			.exception(StatusCode.isSuccess(statusCode) ? null : new ServerException(statusCode))
+			.build();
+		
+		return response;
+	}
+	
+	private void doRequest(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+		// TODO move to thread
+		//Thread t = new JobThread(httpMethod, request, responseHandler);
+		//t.start();
+		responseHandler.onResponse(doRequest(httpMethod, request));
 	}
 	
 	/**
@@ -109,6 +143,21 @@ class AsyncHttpClient : HttpClient {
 			foreach (name, value; headers) {
 				mHttp.addRequestHeader(name, value);
 			}
+		}
+	}
+	
+	class JobThread : Thread {
+		
+		private HTTP.Method httpMethod;
+		private Request request;
+		private HttpResponseHandler responseHandler;
+		
+		this(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+			super(&run);
+		}
+
+		private	void run() {
+			responseHandler.onResponse(doRequest(httpMethod, request));
 		}
 	}
 }

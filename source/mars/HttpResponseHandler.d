@@ -1,9 +1,7 @@
 module mars.HttpResponseHandler;
 
-import mars.ServerException;
+import mars.Response;
 
 interface HttpResponseHandler {
-	void onSuccess(int statusCode, string[string] headers, ubyte[] responseBody);
-	
-	void onFailure(int statusCode, string[string] headers, ubyte[] responseBody, ServerException exception);
+	void onResponse(Response response);
 }
