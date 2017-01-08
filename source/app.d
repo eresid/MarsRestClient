@@ -49,7 +49,7 @@ void main()
 					.headers(["Custom-Header6" : "value6"])
 					.build();
 	//client.put(putRequest, new ResponseListener);
-	//writeln(put("https://httpbin.org/put", "Hi!"));
+	writeln("Finish main!");
 }
 
 private class ResponseListener : HttpResponseHandler {

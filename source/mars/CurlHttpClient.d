@@ -146,18 +146,22 @@ class CurlHttpClient : HttpClient {
 		}
 	}
 	
-	class JobThread : Thread {
-		
-		private HTTP.Method httpMethod;
-		private Request request;
-		private HttpResponseHandler responseHandler;
+	private class JobThread : Thread {
+
+		private HTTP.Method mHttpMethod;
+		private Request mRequest;
+		private HttpResponseHandler mResponseHandler;
 		
 		this(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+			mHttpMethod = httpMethod;
+			mRequest = request;
+			mResponseHandler = responseHandler;
+			
 			super(&run);
 		}
 
 		private	void run() {
-			responseHandler.onResponse(doRequest(httpMethod, request));
+			mResponseHandler.onResponse(doRequest(mHttpMethod, mRequest));
 		}
 	}
 }
