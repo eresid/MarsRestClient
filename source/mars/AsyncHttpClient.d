@@ -9,6 +9,7 @@ import mars.Request;
 import mars.RequestParams;
 import mars.ServerException;
 import mars.StatusCode;
+import mars.UrlHelper;
 
 class AsyncHttpClient : HttpClient {
 	
@@ -50,39 +51,21 @@ class AsyncHttpClient : HttpClient {
 		import std.stdio;
 		import std.conv;
 		
-		string url = getCorrectUrl(request.getUrl);
-		writeln("url: ", url);
-		
 		int statusCode = StatusCode.BAD_REQUEST;
 		string[string] responseHeaders;
 		ubyte[] responseBody;
 
 		mHttp.method = httpMethod;
-		if (httpMethod == HTTP.Method.post || httpMethod == HTTP.Method.del || httpMethod == HTTP.Method.patch || httpMethod == HTTP.Method.put) {
-			mHttp.url = url;
+		mHttp.url = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getParams);
+		
+		if (httpMethod != HTTP.Method.get) {
 			string contentType = "Content-Type" in mOptions.headers ? mOptions.headers["Content-Type"] : null;
 			if (contentType is null) {
 				contentType = "Content-Type" in request.getHeaders ? request.getHeaders["Content-Type"] : "application/json";
 			}
-			mHttp.setPostData(request.getParams.toJson, contentType);
-		} else if (httpMethod == HTTP.Method.get) {
-			string[string] paramsToSend = request.getParams.getParams;
-			
-			if (paramsToSend !is null && paramsToSend.length > 0) {
-				import std.string;
-				import std.algorithm.searching;
-				import std.algorithm.iteration;
-				
-				string urlParams = paramsToSend.keys.map!(k => k ~ "=" ~ paramsToSend[k]).join("&");
-				if (canFind(url, "?")) {
-					mHttp.url = url ~ "&" ~ urlParams;
-				} else {
-					mHttp.url = url ~ "?" ~ urlParams;
-				}
-			} else {
-				mHttp.url = url;
-			}
+			mHttp.setPostData(request.getData, contentType);
 		}
+		
 		if (request.getHeaders != null && request.getHeaders.length > 0) {
 			foreach (name, value; request.getHeaders) {
 				mHttp.addRequestHeader(name, value);
@@ -127,19 +110,5 @@ class AsyncHttpClient : HttpClient {
 				mHttp.addRequestHeader(name, value);
 			}
 		}
-	}
-	
-	private string getCorrectUrl(string url) {
-		import std.exception;
-		
-		enforce(mOptions.baseUrl !is null, new Exception("Cannot get URL, please, set base URL!"));
-		
-		import std.algorithm.searching;
-		
-		if (url.startsWith("http")) {
-			return url;
-		}
-		
-		return mOptions.baseUrl ~ url;
 	}
 }

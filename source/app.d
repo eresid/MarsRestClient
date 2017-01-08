@@ -1,13 +1,7 @@
 import std.net.curl;
 import std.stdio;
 
-import mars.AsyncHttpClient;
-import mars.HttpClient;
-import mars.HttpClientOptions;
-import mars.HttpResponseHandler;
-import mars.Request;
-import mars.RequestParams;
-import mars.ServerException;
+import mars;
 
 string BASE_URL = "https://httpbin.org/";
 
@@ -24,42 +18,42 @@ void main()
 	
 	Request postRequest = new Request.Builder()
 					.url("post?name=Eugene")
-					.params(params)
+					.data(params.toJson)
 					.headers(["Custom-Header1" : "value1", "Custom-Header2" : "value2"])
 					.build();
-	client.post(postRequest, new CredentialsHttpResponseHandler);
+	client.post(postRequest, new ResponseListener);
 	
 	Request getRequest = new Request.Builder()
 					.url("get?name=Eugene&key1=value1&key2=value2")
-					.params(params)
+					.data(params.toJson)
 					.headers(["Custom-Header3" : "value3", "Custom-Header4" : "value4", "Content-Type" : "Custon Content Type"])
 					.build();
-	client.get(getRequest, new CredentialsHttpResponseHandler);
+	client.get(getRequest, new ResponseListener);
 	
 	Request delRequest = new Request.Builder()
 					.url("delete?name=Eugene&key1=value1&key2=value2")
-					.params(params)
+					.data(params.toJson)
 					.headers(["Custom-Header5" : "value5"])
 					.build();
-	client.del(delRequest, new CredentialsHttpResponseHandler);
+	client.del(delRequest, new ResponseListener);
 	
 	Request patchRequest = new Request.Builder()
 					.url("patch?name=Eugene&key1=value1&key2=value2")
-					.params(params)
+					.data(params.toJson)
 					.headers(["Custom-Header5" : "value5"])
 					.build();
-	client.patch(patchRequest, new CredentialsHttpResponseHandler);
+	client.patch(patchRequest, new ResponseListener);
 	
 	Request putRequest = new Request.Builder()
 					.url("put")
-					.params(params)
+					.data(params.toJson)
 					.headers(["Custom-Header6" : "value6"])
 					.build();
-	//client.put(putRequest, new CredentialsHttpResponseHandler);
+	//client.put(putRequest, new ResponseListener);
 	//writeln(put("https://httpbin.org/put", "Hi!"));
 }
 
-private class CredentialsHttpResponseHandler : HttpResponseHandler {
+private class ResponseListener : HttpResponseHandler {
 	void onSuccess(int statusCode, string[string] headers, ubyte[] responseBody) {
 		import std.conv;
 		

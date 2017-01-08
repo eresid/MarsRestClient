@@ -17,13 +17,17 @@ Simple REST client on D language
 * ~~User Agent~~
 * ~~DELETE request~~
 * ~~PATCH request~~
-* Set args and data in builder
-* PUT request
+* ~~Add package.d file~~
+* ~~Set args and data in builder~~
+* ~~Add UrlHelper~~
 
 [0.3]
+* First release in http://code.dlang.org/
 * VK sample
 * httpbin.org sample
 * Dynamic parameters in URL
+* PUT request
+* Unit Tests
 
 [0.4]
 * Multipart/form-data
@@ -38,7 +42,6 @@ Simple REST client on D language
 * Documentation
 	* wiki
 	* javadoc
-* Unit Tests
 * RX support
 * Json serialization/deserialization
 * OAuth 2
