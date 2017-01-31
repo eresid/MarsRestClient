@@ -110,7 +110,19 @@ class CurlHttpClient : HttpClient {
 			// writeln("Progress ", dltotal, ", ", dlnow, ", ", ultotal, ", ", ulnow);
 			return 0;
 		};
-		mHttp.perform();
+
+		try {
+			mHttp.perform();
+		} catch (Exception e) {
+			import std.algorithm : startsWith;
+			import mars.TimeoutException;
+
+			if (e.msg.startsWith("Timeout was reached on handle")) {
+				throw new TimeoutException(requestUrl);
+			} else {
+				throw e;
+			}
+		}
 		
 		loadDefaultHeaders();
 		
