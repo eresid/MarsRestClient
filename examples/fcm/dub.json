@@ -1,0 +1,13 @@
+{
+	"name": "fcmexample",
+	"authors": [
+		"Eugene Sakara"
+	],
+	"description": "FCM sample for MarsRestClient library",
+	"copyright": "Copyright © 2017, Yevhen Sakara",
+	"license": "MIT",
+	"dependencies": {
+		"marsrestclient": "~master",
+		"vibe-d:data": "~>0.7.26"
+	}
+}
