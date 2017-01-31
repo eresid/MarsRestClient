@@ -5,6 +5,7 @@ Simple REST client on D language
 [0.3]
 * ~~First release in http://code.dlang.org/~~
 * ~~httpbin.org sample~~
+* ~~firebase cloud messaging sample~~
 * ~~change API for Async support~~
 
 [0.4]
