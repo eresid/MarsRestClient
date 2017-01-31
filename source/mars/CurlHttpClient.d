@@ -78,6 +78,7 @@ class CurlHttpClient : HttpClient {
 		ubyte[] responseBody;
 
 		mHttp.method = httpMethod;
+		mHttp.operationTimeout = mOptions.timeout;
 		string requestUrl = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getParams);
 		mHttp.url = requestUrl;
 		

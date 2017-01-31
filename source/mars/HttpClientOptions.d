@@ -1,17 +1,19 @@
 module mars.HttpClientOptions;
 
+import std.datetime;
+
 class HttpClientOptions {
 	
-	private immutable int DEFAULT_TIMEOUT = 30;
+	private immutable Duration DEFAULT_TIMEOUT = 30.seconds;
 	private immutable int DEFAULT_MAX_PARALLEL_REQUESTS = 1;
 	
 	private string mUrl;
 	private string[string] mHeaders;
-	private int mTimeoutInSeconds;
+	private Duration mTimeout;
 	private int mMaxParallelRequests;
 	
 	this() {
-		mTimeoutInSeconds = DEFAULT_TIMEOUT;
+		mTimeout = DEFAULT_TIMEOUT;
 		mMaxParallelRequests = DEFAULT_MAX_PARALLEL_REQUESTS;
 	}
 	
@@ -27,11 +29,11 @@ class HttpClientOptions {
 	
 	@property string[string] headers() { return mHeaders; }
 	
-	@property void timeoutInSeconds(int seconds) {
-		mTimeoutInSeconds = seconds;
+	@property void timeout(Duration timeout) {
+		mTimeout = timeout;
 	}
 	
-	@property int timeoutInSeconds() { return mTimeoutInSeconds; }
+	@property Duration timeout() { return mTimeout; }
 	
 	@property void maxParallelRequests(int count) {
 		mMaxParallelRequests = count;
