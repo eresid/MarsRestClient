@@ -8,11 +8,11 @@ Simple REST client on D language
 * ~~firebase cloud messaging sample~~
 * ~~change API for Async support~~
 * VK sample
+* Timeout + TimeoutException + Unittest
 * Dynamic parameters in URL
 
 [0.4]
 * Multipart/form-data
-* Timeout
 * Facebook sample
 * PUT request
 
