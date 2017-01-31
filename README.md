@@ -3,21 +3,24 @@ Simple REST client on D language
 
 ## TODO
 [0.3]
-* First release in http://code.dlang.org/
-* VK sample
-* httpbin.org sample
-* Dynamic parameters in URL
-* PUT request
-* Unit Tests
+* ~~First release in http://code.dlang.org/~~
+* ~~httpbin.org sample~~
+* ~~change API for Async support~~
 
 [0.4]
+* VK sample
+* PUT request
+* Dynamic parameters in URL
+
+[0.5]
 * Multipart/form-data
-* flatbuffers support
-* Timeout
 * Optional logs (terminal or file)
+* Unit Tests
+* Timeout
 
 ## Backlog
 * Async requests
+* flatbuffers support
 * Progress
 * Cache
 * Documentation

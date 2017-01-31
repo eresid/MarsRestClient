@@ -1,0 +1,12 @@
+{
+	"name": "httpbinorg",
+	"authors": [
+		"Eugene Sakara"
+	],
+	"description": "httpbin.org sample for MarsRestClient library",
+	"copyright": "Copyright © 2017, Eugene Sakara",
+	"license": "MIT",
+	"dependencies": {
+		"marsrestclient": "~master"
+	}
+}
