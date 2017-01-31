@@ -1,4 +1,4 @@
-module org.dinipra.fcm.FCMRequest;
+module fcm.FCMRequest;
 
 import vibe.data.json;
 

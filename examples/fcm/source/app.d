@@ -1,8 +1,8 @@
 import std.stdio;
 
-import org.dinipra.fcm.FCMRequest;
-import org.dinipra.fcm.FCMResponse;
-import org.dinipra.fcm.FCMService;
+import fcm.FCMRequest;
+import fcm.FCMResponse;
+import fcm.FCMService;
 
 void main()
 {

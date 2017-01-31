@@ -1,7 +1,7 @@
-module org.dinipra.fcm.FCMService;
+module fcm.FCMService;
 
-import org.dinipra.fcm.FCMRequest;
-import org.dinipra.fcm.FCMResponse;
+import fcm.FCMRequest;
+import fcm.FCMResponse;
 
 import mars;
 

@@ -7,19 +7,18 @@ Simple REST client on D language
 * ~~httpbin.org sample~~
 * ~~firebase cloud messaging sample~~
 * ~~change API for Async support~~
-
-[0.4]
 * VK sample
-* PUT request
 * Dynamic parameters in URL
 
-[0.5]
+[0.4]
 * Multipart/form-data
-* Optional logs (terminal or file)
-* Unit Tests
 * Timeout
+* Facebook sample
+* PUT request
 
 ## Backlog
+* Unit Tests
+* Optional logs (terminal or file)
 * Async requests
 * flatbuffers support
 * Progress

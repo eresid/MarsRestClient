@@ -1,0 +1,12 @@
+{
+	"name": "vksample",
+	"authors": [
+		"Eugene Sakara"
+	],
+	"description": "Vk sample for MarsRestClient library",
+	"copyright": "Copyright © 2017, Eugene Sakara",
+	"license": "MIT",
+	"dependencies": {
+		"marsrestclient": "~master"
+	}
+}

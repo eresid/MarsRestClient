@@ -1,4 +1,4 @@
-module org.dinipra.fcm.FCMResponseError;
+module fcm.FCMResponseError;
 
 /// matches error responses to the correct regId
 struct FCMResponseError
