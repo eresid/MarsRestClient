@@ -77,6 +77,7 @@ unittest {
 		client.get(new Request.Builder().url("delay/5").build(), new ResponseListener);
 		assert(false);
 	} catch (Exception e) {
-		assert(e.msg.startsWith("Timeout was reached on handle"));
+		assert(cast(TimeoutException)e);
+		assert(e.msg.startsWith("Timeout exception:"));
 	}
 }

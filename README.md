@@ -7,30 +7,30 @@ Simple REST client on D language
 * ~~httpbin.org sample~~
 * ~~firebase cloud messaging sample~~
 * ~~change API for Async support~~
+* ~~Timeout + TimeoutException + Unittest~~
 * VK sample
-* Timeout + TimeoutException + Unittest
 * Dynamic parameters in URL
 
 [0.4]
 * Multipart/form-data
 * Facebook sample
 * PUT request
-
-## Backlog
-* Unit Tests
-* Optional logs (terminal or file)
 * Async requests
-* flatbuffers support
+
+[0.5]
+* Optional logs (terminal or file)
+* Unit Tests
 * Progress
 * Cache
-* Documentation
-	* wiki
-	* javadoc
-* RX support
+* [ddoc](http://dlang.org/spec/ddoc.html) documentation
+
+## Backlog
+* [flatbuffers](https://google.github.io/flatbuffers/) support
+* wiki documentation
+* [RX support](https://github.com/lempiji/rx)
 * Json serialization/deserialization
 * OAuth 2
-* Support dlang-requests
-  * https://github.com/ikod/dlang-requests
+* Support [dlang-requests](https://github.com/ikod/dlang-requests)
 
 ## Info
 https://resttesttest.com/
