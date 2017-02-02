@@ -1,6 +1,7 @@
 module vksdk.client.VkApiClient;
 
 import vksdk.actions.OAuth;
+import vksdk.actions.Users;
 import vksdk.client.TransportClient;
 
 class VkApiClient {
@@ -45,13 +46,13 @@ class VkApiClient {
 
     public Friends friends() {
         return new Friends(this);
-    }
+    }*/
 
     public Users users() {
         return new Users(this);
     }
 
-    public com.vk.api.sdk.actions.Utils utils() {
+    /*public com.vk.api.sdk.actions.Utils utils() {
         return new com.vk.api.sdk.actions.Utils(this);
     }
 
