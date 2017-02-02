@@ -12,19 +12,23 @@ import mars;
 // https://p0nce.github.io/d-idioms/#Leveraging-TLS-for-a-fast-thread-safe-singleton
 class MarsTransportClient : TransportClient {
 
-	private FileLogger logger;
+    private immutable string CONTENT_TYPE = "application/x-www-form-urlencoded";
+    private immutable string USER_AGENT = "Dlang VK SDK/0.4.2";
+
+	//private FileLogger logger;
 
     //private immutable ConnectionsSupervisor supervisor;
     private __gshared static MarsTransportClient instance;
 
+    private HttpClient client;
+
     private this() {
 		HttpClientOptions options = new HttpClientOptions;
-		options.baseUrl(BASE_URL);
-		options.headers = ["Content-Type" : "application/x-www-form-urlencoded"];
+		options.headers = ["Content-Type" : CONTENT_TYPE, "User-Agent" : USER_AGENT];
 		options.timeout = 60.seconds;
-		HttpClient client = CurlHttpClient.init(options);
+		client = CurlHttpClient.init(options);
 		
-		logger = new FileLogger("logFile");
+		//logger = new FileLogger("logFile");
 		//supervisor = new ConnectionsSupervisor();
     }
 
@@ -36,62 +40,55 @@ class MarsTransportClient : TransportClient {
         return instance;
     }
 
-    private ClientResponse call(Request request, string url, string requestBody, bool isPost) {
-		HttpClientOptions options = new HttpClientOptions;
-		
-		//auto request = Request;
-		if (isPost) {
-			options.headers = ["Content-Type" : "application/x-www-form-urlencoded"];
-		}
-		request.verbosity = 3;
-		request.timeout = 60.seconds;
-
+    private ClientResponse call(string url, string requestBody) {
         for (int i = 0; i < 3; i++) {
             try {
                 //supervisor.addRequest(request);
 
-                long startTime = Clock.currTime();
+                //long startTime = Clock.currTime();
 
-                Response response;
-				if (requestBody != null) {
-					response = request.post(url, requestBody);
-				} else {
-					response = request.post(url);
-				}
+                Request postRequest = new Request.Builder()
+                					.url(url)
+                					.data(requestBody)
+                					.build();
+                Response response = client.post(postRequest);
 
-                logger.log("%s\t\t%s", url, Clock.currTime() - startTime);
+                //logger.log("%s\t\t%s", url, Clock.currTime() - startTime);
 
                 //supervisor.removeRequest(request);
                 
-                return new ClientResponse(response.code, response.responseBody, response.responseHeaders);
-            } catch (SocketException e) {
-                logger.warningf("Network troubles:\n%s", e.msg);
+                return new ClientResponse(response.getStatusCode, cast(string)response.getResponseBody, response.getHeaders);
+            } catch (Exception e) {
+                //logger.warningf("Network troubles:\n%s", e.msg);
                 throw e;
             }
         }
+
+        throw new Exception("Something wrong");
     }
     
-    private ClientResponse call(string url, MultipartForm form) {
+    /*private ClientResponse call(string url, MultipartForm form) {
 		auto request = Request;
 		request.verbosity = 3;
 		request.timeout = 60.seconds;
 		// TODO
 		auto rs = rq.post(url, form);
 		
-	}
+	}*/
 
     override ClientResponse post(string url, string requestBody) {
-        return call(request, url, requestBody, true);
+        return call(url, requestBody);
     }
 
 	override ClientResponse post(string url) {
-		return call(url, null, true);
+		return call(url, null);
     }
 
     override ClientResponse post(string url, string fileName, File file) {
-		MultipartForm form;
-		form.add(formData("file", file, ["filename": fileName, "Content-Type": "text/plain"]));
+		//MultipartForm form;
+		//form.add(formData("file", file, ["filename": fileName, "Content-Type": "text/plain"]));
 
-        return call(url, form);
+        //return call(url, form);
+        return call(url, null);
     }
 }

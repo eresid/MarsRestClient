@@ -54,7 +54,7 @@ void main()
 
 private class ResponseListener : HttpResponseHandler {
 	void onResponse(Response response) {
-		import std.conv;
+		import std.conv : to;
 		
 		writeln("onResponse " ~ to!string(response.getStatusCode));
 		foreach(key, value; response.getHeaders) {

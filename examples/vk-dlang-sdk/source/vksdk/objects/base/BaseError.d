@@ -33,7 +33,7 @@ struct BaseError {
     @name("request_params")
     RequestParam[] requestParams;
 
-    size_t toHash() const @safe pure nothrow {
+    size_t toHash() const pure nothrow {
 		size_t hash = errorCode.hashOf();
         hash = requestParams.hashOf(hash);
         hash = errorMsg.hashOf(hash);

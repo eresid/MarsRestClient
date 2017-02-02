@@ -10,7 +10,7 @@ struct RequestParam {
     @name("value")
     string value;
 
-    size_t toHash() const @safe pure nothrow {
+    size_t toHash() const pure nothrow {
         size_t hash = value.hashOf();
         hash = key.hashOf(hash);
         return hash;
