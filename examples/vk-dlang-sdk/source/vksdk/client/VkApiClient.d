@@ -7,6 +7,7 @@ class VkApiClient {
 
 	private immutable string API_VERSION = "5.62";
 	private immutable string API_ADDRESS = "https://api.vk.com/method/";
+	private immutable string OAUTH_ENDPOINT = "https://oauth.vk.com/";
 
 	private TransportClient transportClient;
 
@@ -18,8 +19,12 @@ class VkApiClient {
         return transportClient;
     }
 
-    string getEndpoint() {
+    string getApiEndpoint() {
         return API_ADDRESS;
+    }
+
+    string getOAuthEndpoint() {
+        return OAUTH_ENDPOINT;
     }
 
     string getVersion() {

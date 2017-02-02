@@ -7,18 +7,13 @@ import vksdk;
 
 void main()
 {
-    VkKeys vkKeys = new VkKeys;
-    writeln("vkKeys.appId: ", vkKeys.appId);
-    writeln("vkKeys.clientSecret ", vkKeys.clientSecret);
-    writeln("vkKeys.redirectUri: ", vkKeys.redirectUri);
-    writeln("vkKeys.code: ", vkKeys.code);
-
 	TransportClient client = MarsTransportClient.getInstance;
 	VkApiClient vk = new VkApiClient(client);
+	VkKeys vkKeys = new VkKeys;
 
 	try {
 		AuthResponse authResponse = vk.oauth()
-			.userAuthorizationCodeFlow(vkKeys.appId, vkKeys.clientSecret, vkKeys.redirectUri, vkKeys.code)
+			.userAuthorizationCodeFlow(vkKeys.appId, vkKeys.clientSecret, null, null)
 			.execute();
 
 		writeln("access_token: ", authResponse.accessToken);
@@ -56,12 +51,8 @@ class VkKeys {
         auto strings = readText(VK_CREDENTIALS_FILE).splitLines;
 
         if (exists(VK_CREDENTIALS_FILE)) {
-            string line1 = strings[0];
-            writeln("line1 ", line1);
-            appId = to!int(line1);
-            string line2 = strings[1];
-            writeln("line2 ", line2);
-            clientSecret = line2;
+            appId = to!int(strings[0]);
+            clientSecret = strings[1];
             redirectUri = null;
             code = null;
         } else {

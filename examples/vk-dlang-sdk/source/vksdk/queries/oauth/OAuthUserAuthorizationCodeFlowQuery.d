@@ -9,25 +9,25 @@ class OAuthUserAuthorizationCodeFlowQuery : AbstractQueryBuilder!(OAuthUserAutho
     this(VkApiClient client, string endpoint, int clientId, string clientSecret, string redirectUri, string code) {
         super(client, endpoint, "access_token");
         
-        //clientId(clientId);
-        //clientSecret(clientSecret);
-        //redirectUri(redirectUri);
-        //code(code);
+        setClientId(clientId);
+        setClientSecret(clientSecret);
+        setRedirectUri(redirectUri);
+        setCode(code);
     }
 
-    OAuthUserAuthorizationCodeFlowQuery clientId(int value) {
+    OAuthUserAuthorizationCodeFlowQuery setClientId(int value) {
         return unsafeParam("client_id", value);
     }
 
-    OAuthUserAuthorizationCodeFlowQuery clientSecret(string value) {
+    OAuthUserAuthorizationCodeFlowQuery setClientSecret(string value) {
         return unsafeParam("client_secret", value);
     }
 
-    OAuthUserAuthorizationCodeFlowQuery redirectUri(string value) {
+    OAuthUserAuthorizationCodeFlowQuery setRedirectUri(string value) {
         return unsafeParam("redirect_uri", value);
     }
 
-    OAuthUserAuthorizationCodeFlowQuery code(string value) {
+    OAuthUserAuthorizationCodeFlowQuery setCode(string value) {
         return unsafeParam("code", value);
     }
 

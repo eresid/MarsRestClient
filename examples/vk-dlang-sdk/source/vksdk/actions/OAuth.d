@@ -2,12 +2,11 @@ module vksdk.actions.OAuth;
 
 import vksdk.client.AbstractAction;
 import vksdk.client.VkApiClient;
-import vksdk.queries.oauth.OAuthServerClientCredentialsFlowQuery;
+import vksdk.queries.oauth.OAuthGroupAuthorizationCodeFlowQuery;
+import vksdk.queries.oauth.OAuthServiceClientCredentialsFlowQuery;
 import vksdk.queries.oauth.OAuthUserAuthorizationCodeFlowQuery;
 
 class OAuth : AbstractAction {
-	
-	private immutable string OAUTH_ENDPOINT = "https://oauth.vk.com/";
 
 	/**
 	 * Constructor
@@ -18,11 +17,15 @@ class OAuth : AbstractAction {
 		super(client);
 	}
 
-	OAuthUserAuthorizationCodeFlowQuery userAuthorizationCodeFlow(int clientId, string clientSecret, string redirectUri, string code) {
-		return new OAuthUserAuthorizationCodeFlowQuery(getClient(), OAUTH_ENDPOINT, clientId, clientSecret, redirectUri, code);
-	}
+    OAuthUserAuthorizationCodeFlowQuery userAuthorizationCodeFlow(int clientId, string clientSecret, string redirectUri, string code) {
+        return new OAuthUserAuthorizationCodeFlowQuery(getClient(), getClient().getOAuthEndpoint(), clientId, clientSecret, redirectUri, code);
+    }
 
-	OAuthServerClientCredentialsFlowQuery serverClientCredentionalsFlow(int clientId, string clientSecret) {
-		return new OAuthServerClientCredentialsFlowQuery(getClient(), OAUTH_ENDPOINT, clientId, clientSecret);
-	}
+    OAuthGroupAuthorizationCodeFlowQuery groupAuthorizationCodeFlow(int clientId, string clientSecret, string redirectUri, string code) {
+        return new OAuthGroupAuthorizationCodeFlowQuery(getClient(), getClient().getOAuthEndpoint(), clientId, clientSecret, redirectUri, code);
+    }
+
+    OAuthServiceClientCredentialsFlowQuery serviceClientCredentialsFlow(int clientId, string clientSecret) {
+        return new OAuthServiceClientCredentialsFlowQuery(getClient(), getClient().getOAuthEndpoint(), clientId, clientSecret);
+    }
 }

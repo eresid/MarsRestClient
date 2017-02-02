@@ -25,7 +25,7 @@ abstract class AbstractQueryBuilder(T, R) : ApiRequest!R {
      * @param type   type of method response
      */
     this(VkApiClient client, string method) {
-        super(client.getEndpoint() ~ method, client.getTransportClient());
+        super(client.getApiEndpoint() ~ method, client.getTransportClient());
         this.method = method;
         setVersion(client.getVersion);
     }

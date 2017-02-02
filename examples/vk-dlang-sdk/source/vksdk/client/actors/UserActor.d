@@ -12,11 +12,11 @@ class UserActor : Actor {
         this.userId = userId;
     }
 
-    override string getAccessToken() {
-        return accessToken;
-    }
-
     override int getId() {
         return userId;
+    }
+
+    override string getAccessToken() {
+        return accessToken;
     }
 }

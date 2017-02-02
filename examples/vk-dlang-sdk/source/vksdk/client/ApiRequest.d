@@ -5,6 +5,7 @@ import std.algorithm.searching : find;
 
 import vibe.data.json;
 import std.json;
+import std.conv : to;
 
 import vksdk.client.ClientResponse;
 import vksdk.client.TransportClient;
@@ -78,7 +79,7 @@ abstract class ApiRequest(T) {
         }
 
         if (response.getStatusCode() != 200) {
-            throw new ClientException("Internal API server error");
+            throw new ClientException("Internal API server error: " ~ to!string(response.getStatusCode) ~ " " ~ response.getContent);
         }
 
         if ("Content-Type" !in response.getHeaders()) {
