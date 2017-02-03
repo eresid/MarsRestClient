@@ -31,7 +31,7 @@ void main()
 
 class VkKeys {
 
-    private immutable VK_CREDENTIALS_FILE = "vk_credentials.txt";
+    private immutable SETTINGS_FILE = "settings.ini";
 
     immutable int APP_ID = 123456;
     immutable string CLIENT_SECRET = "CLIENT_SECRET";
@@ -44,15 +44,16 @@ class VkKeys {
     string code;
 
     this() {
-        import std.string : splitLines;
-        import std.file : exists, readText;
-        import std.conv : to;
+        import std.file : exists;
 
-        auto strings = readText(VK_CREDENTIALS_FILE).splitLines;
+        if (exists(SETTINGS_FILE)) {
+            import std.conv : to;
+            import dini;
 
-        if (exists(VK_CREDENTIALS_FILE)) {
-            appId = to!int(strings[0]);
-            clientSecret = strings[1];
+            auto ini = Ini.Parse(SETTINGS_FILE);
+
+            appId = to!int(ini["vk"].getKey("app_id"));
+            clientSecret = ini["vk"].getKey("client_secret");
             redirectUri = null;
             code = null;
         } else {

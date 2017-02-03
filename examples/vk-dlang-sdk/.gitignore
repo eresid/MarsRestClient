@@ -24,4 +24,4 @@ dub.selections.json
 
 # Code coverage
 *.lst
-vk_credentials.txt
+settings.ini
