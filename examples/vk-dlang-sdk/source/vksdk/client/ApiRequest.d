@@ -16,6 +16,8 @@ import vksdk.objects.base.BaseError;
 
 abstract class ApiRequest(T) {
 
+    // TODO rewrite logs
+
     private TransportClient client;
 
     private string url;
@@ -38,8 +40,6 @@ abstract class ApiRequest(T) {
         JSONValue json = parseJSON(textResponse);
 
 		if (auto errorElement = "error" in json) {
-        //if (json["error"].type != JSON_TYPE.NULL) {
-            //JSONValue errorElement = json["error"];
             BaseError error;
             try {
 				error = deserializeJson!BaseError(errorElement.toString());
@@ -53,11 +53,6 @@ abstract class ApiRequest(T) {
             log("API error: ", exception.msg);
             throw exception;
         }
-
-        //JSONValue response = json;
-        //if (json["response"].type != JSON_TYPE.NULL) {
-        //    response = json["response"];
-        //}
         
         JSONValue response = "response" in json ? json["response"] : json;
 
@@ -79,7 +74,7 @@ abstract class ApiRequest(T) {
         }
 
         if (response.getStatusCode() != 200) {
-            throw new ClientException("Internal API server error: " ~ to!string(response.getStatusCode) ~ " " ~ response.getContent);
+            throw new ClientException("Internal API server error. Wrong status code: " ~ to!string(response.getStatusCode) ~ ". Content: " ~ response.getContent);
         }
 
         if ("Content-Type" !in response.getHeaders()) {

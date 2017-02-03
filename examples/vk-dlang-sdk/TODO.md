@@ -12,7 +12,7 @@
 |client           |~~AbstractQueryBuilder~~                   |       |
 |client           |~~ApiRequest~~                             |       |
 |client           |ClientResponse                             |0.4.2  |
-|client           |~~Lang~~                                   |       |
+|client           |Lang                                       |0.4.2  |
 |client           |TransportClient                            |0.4.2  |
 |client           |VkApiClient                                |0.4.2  |
 |deserializers    |                                           |       |
@@ -27,6 +27,8 @@
 |queries/oauth    |~~OAuthGroupAuthorizationCodeFlowQuery~~   |       |
 |queries/oauth    |~~OAuthServiceClientCredentialsFlowQuery~~ |       |
 |queries/oauth    |~~OAuthUserAuthorizationCodeFlowQuery~~    |       |
+|queries/users    |UserField                                  |0.4.2  |
+|queries/users    |                                           |       |
 |queries/users    |                                           |       |
 |queries          |EnumParam                                  |0.4.2  |
 
