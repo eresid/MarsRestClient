@@ -25,6 +25,10 @@ class Response {
 	ubyte[] getResponseBody() {
 		return responseBody;
 	}
+
+	string getResponseBodyString() {
+        return cast(string)responseBody;
+    }
 	
 	ServerException getException() {
 		return exception;

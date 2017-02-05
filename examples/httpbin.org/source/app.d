@@ -60,7 +60,7 @@ private class ResponseListener : HttpResponseHandler {
 		foreach(key, value; response.getHeaders) {
 			writeln(key ~ ": " ~ value);
 		}
-		writeln(cast(string)response.getResponseBody);
+		writeln(response.getResponseBodyString);
 	}
 }
 

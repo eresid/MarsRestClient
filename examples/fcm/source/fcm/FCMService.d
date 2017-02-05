@@ -31,7 +31,7 @@ class FCMService {
 					.build();
 		Response response = client.post(postRequest);
 		
-		string requestBody = cast(string)response.getResponseBody;
+		string requestBody = response.getResponseBodyString;
 		writeln(requestBody);
 		writeln("StatusCode " ~ to!string(response.getStatusCode));
 

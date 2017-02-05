@@ -57,7 +57,7 @@ class MarsTransportClient : TransportClient {
 
                 //supervisor.removeRequest(request);
                 
-                return new ClientResponse(response.getStatusCode, cast(string)response.getResponseBody, response.getHeaders);
+                return new ClientResponse(response.getStatusCode, response.getResponseBodyString, response.getHeaders);
             } catch (Exception e) {
                 //logger.warningf("Network troubles:\n%s", e.msg);
                 throw e;
