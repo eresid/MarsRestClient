@@ -1,7 +1,7 @@
 module mars.HttpResponseHandler;
 
-import mars.Response;
+import mars.HttpResponse;
 
 interface HttpResponseHandler {
-	void onResponse(Response response);
+	void onResponse(HttpResponse response);
 }

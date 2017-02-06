@@ -16,7 +16,7 @@ class HttpClientOptions {
 		mTimeout = DEFAULT_TIMEOUT;
 		mMaxParallelRequests = DEFAULT_MAX_PARALLEL_REQUESTS;
 	}
-	
+
 	@property void baseUrl(string url) {
 		mUrl = url;
 	}

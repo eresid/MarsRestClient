@@ -1,8 +1,8 @@
-module mars.Request;
+module mars.HttpRequest;
 
 import mars.RequestParams;
 
-class Request {
+class HttpRequest {
 
 	private string url;
 	private RequestParams params;
@@ -58,8 +58,8 @@ class Request {
 			return this;
 		}
 
-		Request build() {
-			return new Request(this);
+		HttpRequest build() {
+			return new HttpRequest(this);
 		}
 	}
 }

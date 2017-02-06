@@ -4,6 +4,9 @@
 		"Eugene Sakara"
 	],
 	"description": "Simple REST client on D language",
-	"copyright": "Copyright © 2016, Eugene Sakara",
-	"license": "MIT"
+	"copyright": "Copyright © 2016-2017, Eugene Sakara",
+	"license": "MIT",
+	"dependencies": {
+		"requests": "~>0.4.0"
+	}
 }

@@ -1,8 +1,8 @@
-module mars.Response;
+module mars.HttpResponse;
 
 import mars.ServerException;
 
-class Response {
+class HttpResponse {
 
 	private string url;
 	private int statusCode;
@@ -74,8 +74,8 @@ class Response {
 			return this;
 		}
 
-		Response build() {
-			return new Response(this);
+		HttpResponse build() {
+			return new HttpResponse(this);
 		}
 	}
 }

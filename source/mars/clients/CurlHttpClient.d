@@ -1,4 +1,4 @@
-module mars.CurlHttpClient;
+module mars.clients.CurlHttpClient;
 
 import core.thread;
 import std.net.curl;
@@ -6,9 +6,9 @@ import std.net.curl;
 import mars.HttpResponseHandler;
 import mars.HttpClient;
 import mars.HttpClientOptions;
-import mars.Request;
+import mars.HttpRequest;
+import mars.HttpResponse;
 import mars.RequestParams;
-import mars.Response;
 import mars.ServerException;
 import mars.StatusCode;
 import mars.UrlHelper;
@@ -29,47 +29,47 @@ class CurlHttpClient : HttpClient {
 		return new this(options);
 	}
 	
-	void post(Request request, HttpResponseHandler responseHandler) {
+	void post(HttpRequest request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.post, request, responseHandler);
 	}
 	
-	Response post(Request request) {
+	HttpResponse post(HttpRequest request) {
 		return doRequest(HTTP.Method.post, request);
 	}
 	
-	void get(Request request, HttpResponseHandler responseHandler) {
+	void get(HttpRequest request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.get, request, responseHandler);
 	}
 	
-	Response get(Request request) {
+	HttpResponse get(HttpRequest request) {
 		return doRequest(HTTP.Method.get, request);
 	}
 	
-	void put(Request request, HttpResponseHandler responseHandler) {
+	void put(HttpRequest request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.put, request, responseHandler);
 	}
 	
-	Response put(Request request) {
+	HttpResponse put(HttpRequest request) {
 		return doRequest(HTTP.Method.put, request);
 	}
 	
-	void del(Request request, HttpResponseHandler responseHandler) {
+	void del(HttpRequest request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.del, request, responseHandler);
 	}
 	
-	Response del(Request request) {
+	HttpResponse del(HttpRequest request) {
 		return doRequest(HTTP.Method.del, request);
 	}
 	
-	void patch(Request request, HttpResponseHandler responseHandler) {
+	void patch(HttpRequest request, HttpResponseHandler responseHandler) {
 		doRequest(HTTP.Method.patch, request, responseHandler);
 	}
 	
-	Response patch(Request request) {
+	HttpResponse patch(HttpRequest request) {
 		return doRequest(HTTP.Method.patch, request);
 	}
 	
-	Response doRequest(HTTP.Method httpMethod, Request request) {
+	HttpResponse doRequest(HTTP.Method httpMethod, HttpRequest request) {
 		import std.stdio;
 		import std.conv;
 		
@@ -126,7 +126,7 @@ class CurlHttpClient : HttpClient {
 		
 		loadDefaultHeaders();
 		
-		Response response = new Response.Builder()
+		HttpResponse response = new HttpResponse.Builder()
 			.url(requestUrl)
 			.statusCode(statusCode)
 			.headers(responseHeaders)
@@ -137,7 +137,7 @@ class CurlHttpClient : HttpClient {
 		return response;
 	}
 	
-	private void doRequest(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+	private void doRequest(HTTP.Method httpMethod, HttpRequest request, HttpResponseHandler responseHandler) {
 		// TODO move to thread
 		//Thread t = new JobThread(httpMethod, request, responseHandler);
 		//t.start();
@@ -162,10 +162,10 @@ class CurlHttpClient : HttpClient {
 	private class JobThread : Thread {
 
 		private HTTP.Method mHttpMethod;
-		private Request mRequest;
+		private HttpRequest mRequest;
 		private HttpResponseHandler mResponseHandler;
 		
-		this(HTTP.Method httpMethod, Request request, HttpResponseHandler responseHandler) {
+		this(HTTP.Method httpMethod, HttpRequest request, HttpResponseHandler responseHandler) {
 			mHttpMethod = httpMethod;
 			mRequest = request;
 			mResponseHandler = responseHandler;

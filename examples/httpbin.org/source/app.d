@@ -16,34 +16,34 @@ void main()
 	options.headers = ["DefaultHeader" : "header value", "User-Agent" : "Custom User Agent", "Accept" : "Custom Accept"];
 	HttpClient client = CurlHttpClient.init(options);
 	
-	Request postRequest = new Request.Builder()
+	HttpRequest postRequest = new HttpRequest.Builder()
 					.url("post?name=Eugene")
 					.data(params.toJson)
 					.headers(["Custom-Header1" : "value1", "Custom-Header2" : "value2"])
 					.build();
 	//client.post(postRequest, new ResponseListener);
 	
-	Request getRequest = new Request.Builder()
+	HttpRequest getRequest = new HttpRequest.Builder()
 					.url("get?name=Eugene&key1=value1&key2=value2")
 					.headers(["Custom-Header3" : "value3", "Custom-Header4" : "value4", "Content-Type" : "Custon Content Type"])
 					.build();
 	//client.get(getRequest, new ResponseListener);
 	
-	Request delRequest = new Request.Builder()
+	HttpRequest delRequest = new HttpRequest.Builder()
 					.url("delete?name=Eugene&key1=value1&key2=value2")
 					.data(params.toJson)
 					.headers(["Custom-Header5" : "value5"])
 					.build();
 	//client.del(delRequest, new ResponseListener);
 	
-	Request patchRequest = new Request.Builder()
+	HttpRequest patchRequest = new HttpRequest.Builder()
 					.url("patch?name=Eugene&key1=value1&key2=value2")
 					.data(params.toJson)
 					.headers(["Custom-Header5" : "value5"])
 					.build();
 	//client.patch(patchRequest, new ResponseListener);
 	
-	Request putRequest = new Request.Builder()
+	HttpRequest putRequest = new HttpRequest.Builder()
 					.url("put")
 					.data(params.toJson)
 					.headers(["Custom-Header6" : "value6"])
@@ -53,7 +53,7 @@ void main()
 }
 
 private class ResponseListener : HttpResponseHandler {
-	void onResponse(Response response) {
+	void onResponse(HttpResponse response) {
 		import std.conv : to;
 		
 		writeln("onResponse " ~ to!string(response.getStatusCode));
@@ -74,7 +74,7 @@ unittest {
 	HttpClient client = CurlHttpClient.init(options);
 
 	try {
-		client.get(new Request.Builder().url("delay/5").build(), new ResponseListener);
+		client.get(new HttpRequest.Builder().url("delay/5").build(), new ResponseListener);
 		assert(false);
 	} catch (Exception e) {
 		assert(cast(TimeoutException)e);

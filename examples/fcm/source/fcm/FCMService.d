@@ -25,11 +25,11 @@ class FCMService {
 		writeln(options.headers);
 		writeln(request.serializeToJsonString());
 		
-		Request postRequest = new Request.Builder()
+		HttpRequest postRequest = new HttpRequest.Builder()
 					.url("https://fcm.googleapis.com/fcm/send")
 					.data(request.serializeToJsonString())
 					.build();
-		Response response = client.post(postRequest);
+		HttpResponse response = client.post(postRequest);
 		
 		string requestBody = response.getResponseBodyString;
 		writeln(requestBody);

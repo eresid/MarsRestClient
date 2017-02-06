@@ -8,11 +8,13 @@ Simple REST client on D language
 * ~~firebase cloud messaging sample~~
 * ~~change API for Async support~~
 * ~~Timeout + TimeoutException + Unittest~~
-* VK sample
+* Support [dlang-requests](https://github.com/ikod/dlang-requests) (get/post/delete/patch)
+* Support [vibed http client](http://vibed.org/api/vibe.http.client/) (get/post/delete/patch)
 * Dynamic parameters in URL
 
 [0.4]
 * Multipart/form-data
+* VK sample
 * Facebook sample
 * PUT request
 * Async requests
@@ -30,7 +32,6 @@ Simple REST client on D language
 * [RX support](https://github.com/lempiji/rx)
 * Json serialization/deserialization
 * OAuth 2
-* Support [dlang-requests](https://github.com/ikod/dlang-requests)
 
 ## Info
 https://resttesttest.com/
