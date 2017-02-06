@@ -21,8 +21,8 @@ void main()
 					.data(params.toJson)
 					.headers(["Custom-Header1" : "value1", "Custom-Header2" : "value2"])
 					.build();
-	//client.post(postRequest, new ResponseListener);
-	
+	client.post(postRequest, new ResponseListener);
+
 	HttpRequest getRequest = new HttpRequest.Builder()
 					.url("get?name=Eugene&key1=value1&key2=value2")
 					.headers(["Custom-Header3" : "value3", "Custom-Header4" : "value4", "Content-Type" : "Custon Content Type"])

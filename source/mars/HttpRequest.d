@@ -8,6 +8,7 @@ class HttpRequest {
 	private RequestParams params;
 	private string data;
 	private string[string] headers;
+	private string[string] urlParams;
 	
 	string getUrl() {
 		return url;
@@ -24,12 +25,17 @@ class HttpRequest {
 	string[string] getHeaders() {
 		return headers;
 	}
+
+    string[string] getUrlParams() {
+        return urlParams;
+    }
 	
 	private this(Builder builder) {
 		url = builder.mUrl;
 		params = builder.mParams;
 		data = builder.mData;
 		headers = builder.mHeaders;
+		urlParams = builder.mUrlParams;
 	}
 	
 	static class Builder {
@@ -37,6 +43,7 @@ class HttpRequest {
 		private RequestParams mParams;
 		private string mData;
 		private string[string] mHeaders;
+		private string[string] mUrlParams;
 
 		Builder url(string value) {
 			mUrl = value;
@@ -57,6 +64,11 @@ class HttpRequest {
 			mHeaders = value;
 			return this;
 		}
+
+		Builder urlParams(string[string] value) {
+            mUrlParams = value;
+            return this;
+        }
 
 		HttpRequest build() {
 			return new HttpRequest(this);

@@ -2,6 +2,7 @@ module mars.clients.RequestsHttpClient;
 
 import core.thread;
 import std.net.curl;
+import std.stdio;
 
 import mars.HttpResponseHandler;
 import mars.HttpClient;
@@ -66,6 +67,15 @@ class RequestsHttpClient : HttpClient {
 	HttpResponse patch(HttpRequest request) {
 		return doRequest(HTTP.Method.patch, request);
 	}
+
+    void upload(HttpRequest request, File file, HttpResponseHandler responseHandler) {
+        // TODO move to thread
+        responseHandler.onResponse(upload(request, file));
+    }
+
+    HttpResponse upload(HttpRequest request, File file) {
+        return null;
+    }
 	
 	HttpResponse doRequest(HTTP.Method httpMethod, HttpRequest request) {
         auto rq = Request();

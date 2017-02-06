@@ -11,16 +11,29 @@ import mars.RequestParams;
 
 class UrlHelper {
 
-	static string createUrl(string baseUrl, string requestUrl, RequestParams params) {
+	static string createUrl(string baseUrl, string requestUrl, string[string] urlParams, RequestParams params) {
 		enforce(requestUrl !is null, new Exception("Cannot get request Url!"));
 
+        string finalUrl;
+
 		if (requestUrl.startsWith("http")) {
-			return addArgsIfNeed(requestUrl, params);
+			finalUrl = addArgsIfNeed(requestUrl, params);
 		}
 
 		enforce(baseUrl !is null, new Exception("Cannot get base Url!"));
 
-		return baseUrl ~ addArgsIfNeed(requestUrl, params);
+		finalUrl = baseUrl ~ addArgsIfNeed(requestUrl, params);
+
+		if (urlParams !is null && urlParams.length > 0) {
+            finalUrl = setUrlParams(finalUrl, urlParams);
+		}
+
+		return finalUrl;
+	}
+
+	private static string setUrlParams(string url, string[string] urlParams) {
+	    // TODO
+        return url;
 	}
 
 	private static string addArgsIfNeed(string url, RequestParams params) {

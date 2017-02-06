@@ -1,5 +1,7 @@
 module mars.HttpClient;
 
+import std.stdio;
+
 import mars.HttpClientOptions;
 import mars.HttpRequest;
 import mars.HttpResponse;
@@ -28,4 +30,8 @@ interface HttpClient {
 	void patch(HttpRequest request, HttpResponseHandler responseHandler);
 
 	HttpResponse patch(HttpRequest request);
+
+    void upload(HttpRequest request, File file, HttpResponseHandler responseHandler);
+
+    HttpResponse upload(HttpRequest request, File file);
 }

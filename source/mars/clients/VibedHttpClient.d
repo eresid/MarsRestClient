@@ -1,6 +1,7 @@
 module mars.clients.VibedHttpClient;
 
 import core.thread;
+import std.stdio;
 
 import mars.HttpResponseHandler;
 import mars.HttpClient;
@@ -66,6 +67,15 @@ class VibedHttpClient : HttpClient {
 	HttpResponse patch(HttpRequest request) {
 		return doRequest(HTTPMethod.PATCH, request);
 	}
+
+    void upload(HttpRequest request, File file, HttpResponseHandler responseHandler) {
+        // TODO move to thread
+        responseHandler.onResponse(upload(request, file));
+    }
+
+    HttpResponse upload(HttpRequest request, File file) {
+        return null;
+    }
 	
 	HttpResponse doRequest(HTTPMethod httpMethod, HttpRequest request) {
 

@@ -2,6 +2,7 @@ module mars.clients.CurlHttpClient;
 
 import core.thread;
 import std.net.curl;
+import std.stdio;
 
 import mars.HttpResponseHandler;
 import mars.HttpClient;
@@ -68,6 +69,15 @@ class CurlHttpClient : HttpClient {
 	HttpResponse patch(HttpRequest request) {
 		return doRequest(HTTP.Method.patch, request);
 	}
+
+    void upload(HttpRequest request, File file, HttpResponseHandler responseHandler) {
+        // TODO move to thread
+        responseHandler.onResponse(upload(request, file));
+    }
+
+    HttpResponse upload(HttpRequest request, File file) {
+        return null;
+    }
 	
 	HttpResponse doRequest(HTTP.Method httpMethod, HttpRequest request) {
 		import std.stdio;
@@ -79,7 +89,7 @@ class CurlHttpClient : HttpClient {
 
 		mHttp.method = httpMethod;
 		mHttp.operationTimeout = mOptions.timeout;
-		string requestUrl = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getParams);
+		string requestUrl = UrlHelper.createUrl(mOptions.baseUrl, request.getUrl, request.getUrlParams, request.getParams);
 		mHttp.url = requestUrl;
 		
 		if (httpMethod != HTTP.Method.get) {
