@@ -1,8 +1,6 @@
 import std.stdio;
 
-import fcm.FCMRequest;
-import fcm.FCMResponse;
-import fcm.FCMService;
+import fcm;
 
 void main()
 {
