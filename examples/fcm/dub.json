@@ -8,6 +8,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"marsrestclient": {"path": "../../"},
-		"vibe-d:data": "~>0.8.0-beta.2"
+		"vibe-d:data": "~>0.8.0-beta.3"
 	}
 }
