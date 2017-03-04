@@ -8,11 +8,11 @@
 	"description": "D library for VK API interaction, includes OAuth 2.0 authorization and API methods",
 	"dependencies": {
 		"marsrestclient": {"path": "../../"},
-		"vibe-d:data": "~>0.8.0-beta.2",
+		"vibe-d:core": "0.8.0-beta.3",
+		"vibe-d:http": "0.8.0-beta.3",
+		"vibe-d:data": "~>0.8.0-beta.3",
 		"requests": "~>0.4.0",
 		"dini": "~>2.0.0"
 	},
-	"versions": [
-		"VibeCustomMain"
-	]
+	"subConfigurations": { "vibe-d:core": "libasync" }
 }

@@ -3,7 +3,7 @@ module vksdk.queries.users.UsersGetQuery;
 import vksdk.client.AbstractQueryBuilder;
 import vksdk.client.VkApiClient;
 import vksdk.queries.users.UserField;
-import vksdk.queries.users.UserXtrCounters;
+import vksdk.objects.users.UserXtrCounters;
 
 /**
  * Query for Users.get method

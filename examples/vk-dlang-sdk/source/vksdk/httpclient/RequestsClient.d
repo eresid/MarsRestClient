@@ -8,20 +8,9 @@ import vksdk.client.ClientResponse;
 import vksdk.client.TransportClient;
 import requests;
 
-class RequestsTransportClient : TransportClient {
+class RequestsTransportClient : BaseTransportClient {
 
-   private immutable string CONTENT_TYPE = "application/x-www-form-urlencoded";
-   private immutable string USER_AGENT = "Dlang VK SDK/0.4.2";
-
-	//private FileLogger logger;
-
-    //private immutable ConnectionsSupervisor supervisor;
     private static RequestsTransportClient instance;
-
-    private this() {
-		//logger = new FileLogger("logFile");
-		//supervisor = new ConnectionsSupervisor();
-    }
 
     static TransportClient getInstance() {
         if (instance is null) {
@@ -72,14 +61,6 @@ class RequestsTransportClient : TransportClient {
 		auto response = request.post(url, form);
 		return new ClientResponse(response.code, cast(string)response.responseBody, response.responseHeaders);
 	}
-
-    override ClientResponse post(string url, string requestBody) {
-        return call(url, requestBody, true);
-    }
-
-	override ClientResponse post(string url) {
-		return call(url, null, true);
-    }
 
     override ClientResponse post(string url, string fileName, File file) {
 		MultipartForm form;

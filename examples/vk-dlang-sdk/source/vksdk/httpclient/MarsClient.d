@@ -10,27 +10,11 @@ import mars;
 
 // Singleton
 // https://p0nce.github.io/d-idioms/#Leveraging-TLS-for-a-fast-thread-safe-singleton
-class MarsTransportClient : TransportClient {
+class MarsTransportClient : BaseTransportClient {
 
-    private immutable string CONTENT_TYPE = "application/x-www-form-urlencoded";
-    private immutable string USER_AGENT = "Dlang VK SDK/0.4.2";
-
-	//private FileLogger logger;
-
-    //private immutable ConnectionsSupervisor supervisor;
     private __gshared static MarsTransportClient instance;
 
     private HttpClient client;
-
-    private this() {
-		HttpClientOptions options = new HttpClientOptions;
-		options.headers = ["Content-Type" : CONTENT_TYPE, "User-Agent" : USER_AGENT];
-		options.timeout = 60.seconds;
-		client = CurlHttpClient.init(options);
-		
-		//logger = new FileLogger("logFile");
-		//supervisor = new ConnectionsSupervisor();
-    }
 
     static TransportClient getInstance() {
         if (instance is null) {
@@ -38,6 +22,15 @@ class MarsTransportClient : TransportClient {
         }
 
         return instance;
+    }
+
+    private this() {
+        super();
+
+		HttpClientOptions options = new HttpClientOptions;
+		options.headers = ["Content-Type" : CONTENT_TYPE, "User-Agent" : USER_AGENT];
+		options.timeout = 60.seconds;
+		client = CurlHttpClient.init(options);
     }
 
     private ClientResponse call(string url, string requestBody) {
@@ -75,14 +68,6 @@ class MarsTransportClient : TransportClient {
 		auto rs = rq.post(url, form);
 		
 	}*/
-
-    override ClientResponse post(string url, string requestBody) {
-        return call(url, requestBody);
-    }
-
-	override ClientResponse post(string url) {
-		return call(url, null);
-    }
 
     override ClientResponse post(string url, string fileName, File file) {
 		//MultipartForm form;

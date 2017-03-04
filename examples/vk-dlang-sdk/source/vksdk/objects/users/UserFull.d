@@ -4,6 +4,7 @@ import vksdk.objects.audio.AudioFull;
 import vksdk.objects.base.BaseObject;
 import vksdk.objects.base.BoolInt;
 import vksdk.objects.base.Country;
+import vksdk.objects.users.User;
 
 import vibe.data.json;
 
