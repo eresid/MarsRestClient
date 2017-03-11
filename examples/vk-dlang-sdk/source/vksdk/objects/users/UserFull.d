@@ -4,6 +4,9 @@ import vksdk.objects.audio.AudioFull;
 import vksdk.objects.base.BaseObject;
 import vksdk.objects.base.BoolInt;
 import vksdk.objects.base.Country;
+import vksdk.objects.users.CropPhoto;
+import vksdk.objects.users.LastSeen;
+import vksdk.objects.users.Occupation;
 import vksdk.objects.users.User;
 
 import vibe.data.json;
@@ -89,19 +92,19 @@ class UserFull : User {
      * Information whether the user has main photo
      */
     @name("has_photo")
-    private BoolInt hasPhoto;
+    private BoolInt _hasPhoto;
 
     /**
      * Information whether the user specified his phone number
      */
     @name("has_mobile")
-    private BoolInt hasMobile;
+    private BoolInt _hasMobile;
 
     /**
      * Information whether the user is a friend of current user
      */
     @name("is_friend")
-    private BoolInt isFriend;
+    private BoolInt _isFriend;
 
     /**
      * Friend status for current user
@@ -119,31 +122,31 @@ class UserFull : User {
      * Information whether current user can post on the user's wall
      */
     @name("can_post")
-    private BoolInt canPost;
+    private BoolInt _canPost;
 
     /**
      * Information whether current user can see other users' audio on the wall
      */
     @name("can_see_all_posts")
-    private BoolInt canSeeAllPosts;
+    private BoolInt _canSeeAllPosts;
 
     /**
      * Information whether current user can see the user's audio
      */
     @name("can_see_audio")
-    private BoolInt canSeeAudio;
+    private BoolInt _canSeeAudio;
 
     /**
      * Information whether current user can write private message
      */
     @name("can_write_private_message")
-    private BoolInt canWritePrivateMessage;
+    private BoolInt _canWritePrivateMessage;
 
     /**
      * Information whether current user can send a friend request
      */
     @name("can_send_friend_request")
-    private BoolInt canSendFriendRequest;
+    private BoolInt _canSendFriendRequest;
 
     /**
      * Information whether current user can see
@@ -218,7 +221,7 @@ class UserFull : User {
     private LastSeen lastSeen;
 
     @name("exports")
-    private Exports exports;
+    private Json exports;
 
     @name("crop_photo")
     private CropPhoto cropPhoto;
@@ -251,13 +254,13 @@ class UserFull : User {
      * Information whether the requested user is in faves of current user
      */
     @name("is_favorite")
-    private BoolInt isFavorite;
+    private BoolInt _isFavorite;
 
     /**
      * Information whether the requested user is hidden from current user's newsfeed
      */
     @name("is_hidden_from_feed")
-    private BoolInt isHiddenFromFeed;
+    private BoolInt _isHiddenFromFeed;
 
     /**
      * Number of common friends with current user
@@ -450,15 +453,15 @@ class UserFull : User {
     }
 
     bool hasPhoto() {
-        return hasPhoto == BoolInt.YES;
+        return _hasPhoto == BoolInt.YES;
     }
 
-    bool isHasMobile() {
-        return hasMobile == BoolInt.YES;
+    bool hasMobile() {
+        return _hasMobile == BoolInt.YES;
     }
 
-    bool isIsFriend() {
-        return isFriend == BoolInt.YES;
+    bool isFriend() {
+        return _isFriend == BoolInt.YES;
     }
 
     int getFriendStatus() {
@@ -470,23 +473,23 @@ class UserFull : User {
     }
 
     bool canPost() {
-        return canPost == BoolInt.YES;
+        return _canPost == BoolInt.YES;
     }
 
     bool canSeeAllPosts() {
-        return canSeeAllPosts == BoolInt.YES;
+        return _canSeeAllPosts == BoolInt.YES;
     }
 
     bool canSeeAudio() {
-        return canSeeAudio == BoolInt.YES;
+        return _canSeeAudio == BoolInt.YES;
     }
 
     bool canWritePrivateMessage() {
-        return canWritePrivateMessage == BoolInt.YES;
+        return _canWritePrivateMessage == BoolInt.YES;
     }
 
     bool canSendFriendRequest() {
-        return canSendFriendRequest == BoolInt.YES;
+        return _canSendFriendRequest == BoolInt.YES;
     }
 
     string getMobilePhone() {
@@ -541,7 +544,7 @@ class UserFull : User {
         return lastSeen;
     }
 
-    Exports getExports() {
+    Json getExports() {
         return exports;
     }
 
@@ -565,12 +568,12 @@ class UserFull : User {
         return blacklistedByMe == BoolInt.YES;
     }
 
-    bool isIsFavorite() {
-        return isFavorite == BoolInt.YES;
+    bool isFavorite() {
+        return _isFavorite == BoolInt.YES;
     }
 
-    bool isIsHiddenFromFeed() {
-        return isHiddenFromFeed == BoolInt.YES;
+    bool isHiddenFromFeed() {
+        return _isHiddenFromFeed == BoolInt.YES;
     }
 
     int getCommonCount() {

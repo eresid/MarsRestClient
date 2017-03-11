@@ -1,5 +1,6 @@
 module vksdk.objects.audio.AudioFull;
 
+import vksdk.objects.audio.Audio;
 import vksdk.objects.base.BoolInt;
 
 import vibe.data.json;

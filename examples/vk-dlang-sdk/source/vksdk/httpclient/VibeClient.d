@@ -1,4 +1,4 @@
-module vksdk.httpclient.RequestsTransportClient;
+module vksdk.httpclient.VibeClient;
 
 import std.datetime;
 import std.experimental.logger.filelogger;
@@ -8,13 +8,13 @@ import vksdk.client.ClientResponse;
 import vksdk.client.TransportClient;
 import requests;
 
-class RequestsTransportClient : BaseTransportClient {
+class VibeClient : BaseTransportClient {
 
-    private static RequestsTransportClient instance;
+    private static VibeClient instance;
 
     static TransportClient getInstance() {
         if (instance is null) {
-            instance = new RequestsTransportClient;
+            instance = new VibeClient;
         }
 
         return instance;

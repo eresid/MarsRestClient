@@ -2,6 +2,7 @@ module vksdk.objects.users.User;
 
 import vksdk.objects.base.BoolInt;
 import vksdk.objects.base.Sex;
+import vksdk.objects.users.UserMin;
 
 import vibe.data.json;
 
