@@ -1,5 +1,7 @@
 module fcm.FCMRequest;
 
+import std.typecons;
+
 import vibe.data.json;
 
 /**
@@ -20,7 +22,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("to")
-	//string to;
+	//Nullable!string to;
 	
 	/**
 	 * This parameter specifies a list of devices (registration tokens,
@@ -32,7 +34,7 @@ struct FCMRequest
 	 * registration tokens) are allowed using HTTP JSON format only.
 	 */
 	@name("registration_ids")
-	string[] registrationIds = null;
+	string[] registrationIds;
 
 	/**
 	 * This parameter specifies a logical expression of conditions that
@@ -46,7 +48,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("condition")
-	//string condition = null;
+	//Nullable!string condition;
 
 	/**
 	 * This parameter is deprecated. Instead, use to to specify message
@@ -55,7 +57,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("notification_key")
-	//deprecated string notificationKey = null;
+	//deprecated Nullable!string notificationKey;
 
 	// Options
 	
@@ -78,7 +80,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("collapse_key")
-	//string collapseKey = null;
+	//Nullable!string collapseKey;
 
 	/**
 	 * Sets the priority of the message. Valid values are "normal"
@@ -101,7 +103,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("priority")
-	//string priority = null;
+	//Nullable!string priority;
 	
 	/**
 	 * On iOS, use this field to represent content-available in the
@@ -112,7 +114,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("content_available")
-	//bool contentAvailable;
+	//Nullable!bool contentAvailable;
 	
 	/**
 	 * This parameter specifies how long (in seconds) the message
@@ -125,7 +127,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("time_to_live")
-	//int timeToLive;
+	//Nullable!int timeToLive;
 	
 	/**
 	 * This parameter specifies the package name of the application
@@ -134,7 +136,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("restricted_package_name")
-	//string restrictedPackageName = null;
+	//Nullable!string restrictedPackageName;
 	
 	/**
 	 * This parameter, when set to true, allows developers to test a
@@ -144,7 +146,7 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("dry_run")
-	//bool dryRun;
+	//Nullable!bool dryRun;
 	
 	// Payload
 
@@ -172,7 +174,7 @@ struct FCMRequest
 	 */
 	@optional
 	@name("data")
-	Json data = null;
+	Nullable!Json data;
 
 	/**
 	 * This parameter specifies the predefined, user-visible key-value
@@ -183,5 +185,5 @@ struct FCMRequest
 	 */
 	//@optional
 	//@name("notification")
-	//Json notification = null;
+	//Nullable!Json notification;
 }

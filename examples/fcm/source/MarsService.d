@@ -1,4 +1,4 @@
-module fcm.FCMService;
+module MarsService;
 
 import fcm.AbstractService;
 import fcm.FCMRequest;
@@ -10,7 +10,7 @@ import std.stdio;
 import std.conv;
 import vibe.data.json;
 
-class FCMService : AbstractService {
+class MarsService : AbstractService {
 
     this(string key) {
         super(key);
